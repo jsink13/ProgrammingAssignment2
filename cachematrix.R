@@ -11,14 +11,14 @@
 #  getinv - gets the inv (NULL if not yet stored)
 #  setinv - sets the inv.
 makeCacheMatrix <- function(x = matrix()) {
-  m <- NULL
+  inverse <- NULL
   set <- function(y) {
     x <<- y
-    m <<- NULL
+    inverse <<- NULL
   }
   get <- function() x
-  setinv <- function(mean) m <<- mean
-  getinv <- function() m
+  setinv <- function(inv) inverse <<- inv
+  getinv <- function() inverse
   list(set = set, get = get,
        setinv = setinv,
        getinv = getinv)
@@ -36,7 +36,7 @@ cacheSolve <- function(x, ...) {
   data <- x$get()
   # we could check m is square and invertible, but 
   # we can just let solve() give an error
-  m <- solve(data, ...)
-  x$setinv(m)
-  m
+  myinv <- solve(data, ...)
+  x$setinv(myinv)
+  myinv
 }
