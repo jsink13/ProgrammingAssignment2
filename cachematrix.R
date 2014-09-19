@@ -5,6 +5,11 @@
 
 # inputs a matrix and returns a wrapper around the matrix.
 # the output of this function can be passed into the cacheSolve
+# expose 4 methods
+#  get - retrns the original matrix
+#  set - sets the original matrix
+#  getinv - gets the inv (NULL if not yet stored)
+#  setinv - sets the inv.
 makeCacheMatrix <- function(x = matrix()) {
   m <- NULL
   set <- function(y) {
@@ -19,7 +24,7 @@ makeCacheMatrix <- function(x = matrix()) {
        getinv = getinv)
 }
 
-# this function iinputs a "cacheMatrix" output from makeCacheMattrix
+# this function inputs a "cacheMatrix" output from makeCacheMattrix
 # and returns the inverse of the underlying matrix.  it caches the inverse, 
 #  so if called again, tis method returns with inv without calling solve. 
 cacheSolve <- function(x, ...) {
