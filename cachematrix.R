@@ -1,15 +1,37 @@
-## Put comments here that give an overall description of what your
-## functions do
+# Two functions that work together to calculate and store 
+# the inverse of a matrix.
+#the matrix is assumed to be square and invertible, 
+# if not the solve() method will give error.
 
-## Write a short comment describing this function
-
+# inputs a matrix and returns a wrapper around the matrix.
+# the output of this function can be passed into the cacheSolve
 makeCacheMatrix <- function(x = matrix()) {
-
+  m <- NULL
+  set <- function(y) {
+    x <<- y
+    m <<- NULL
+  }
+  get <- function() x
+  setinv <- function(mean) m <<- mean
+  getinv <- function() m
+  list(set = set, get = get,
+       setinv = setinv,
+       getinv = getinv)
 }
 
-
-## Write a short comment describing this function
-
+# this function iinputs a "cacheMatrix" output from makeCacheMattrix
+# and returns the inverse of the underlying matrix.  it caches the inverse, 
+#  so if called again, tis method returns with inv without calling solve. 
 cacheSolve <- function(x, ...) {
-        ## Return a matrix that is the inverse of 'x'
+  m <- x$getinv()
+  if(!is.null(m)) {
+    message("getting cached data")
+    return(m)
+  }
+  data <- x$get()
+  # we could check m is square and invertible, but 
+  # we can just let solve() give an error
+  m <- solve(data, ...)
+  x$setinv(m)
+  m
 }
